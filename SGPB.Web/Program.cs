@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore;
+                using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -20,8 +20,8 @@ namespace SGPB.Web
                        host.Services.GetService<IServiceScopeFactory>();
                         using (IServiceScope scope = scopeFactory.CreateScope())
                         {
-                                SeedDb seeder = scope.ServiceProvider.GetService<SeedDb>();
-                                seeder.SeedAsync().Wait();
+                                SeedDb? service = scope.ServiceProvider.GetService<SeedDb>();
+                                service.SeedAsync().Wait();
                         }
                 }
                 public static IWebHostBuilder CreateWebHostBuilder(string[] args)

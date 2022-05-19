@@ -1,5 +1,9 @@
-﻿using SGPB.Web.Data.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using SGPB.Web.Data.Entities;
+using SGPB.Web.Enums;
 using SGPB.Web.Helpers;
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -8,10 +12,11 @@ namespace SGPB.Web.Data
         public class SeedDb
         {
                 private readonly ApplicationDbContext _context;
-               
+
+
                 private readonly IBlobHelper _blobHelper;
 
-                public SeedDb(ApplicationDbContext context,  IBlobHelper blobHelper)
+                public SeedDb(ApplicationDbContext context, IBlobHelper blobHelper)
                 {
                         _context = context;
                         _blobHelper = blobHelper;
@@ -23,8 +28,15 @@ namespace SGPB.Web.Data
                         await CheckCategoriesAsync();
                         await CheckDocumentTypesAsync();
                         await CheckEditorialesAsync();
+                        await CheckBooksAsync();
+
+
 
                 }
+
+
+
+
 
                 private async Task CheckCategoriesAsync()
                 {
@@ -76,6 +88,64 @@ namespace SGPB.Web.Data
                                 _context.Editoriales.Add(new Editorial { Name = "Editorial Sexto Piso" });
                                 await _context.SaveChangesAsync();
                         }
+                }
+
+                private async Task CheckBooksAsync()
+                {
+                        if (!_context.Books.Any())
+                        {
+                                await AddBookAsync("000000001", "La Biblia", 3000, 3);
+                                await AddBookAsync("000000002", "El Alquimista", 100, 3);
+                                await AddBookAsync("000000003", "El Señor de los Anillos", 3000, 3);
+                                await AddBookAsync("000000004", "El Código da Vinci", 920, 2);
+                                await AddBookAsync("000000005", "Lo que el viento se llevó", 100, 0);
+                                await AddBookAsync("000000006", "Piense y hágase rico", 435, 9);
+                                await AddBookAsync("000000007", "El diario de Ana Frank", 92, 3);
+                                await AddBookAsync("000000008", "100 años de Soledad", 1003, 2);
+                                await AddBookAsync("000000009", "La casa de los espíritus", 954, 1);
+                                await AddBookAsync("000000010", "Preludio a la fundación", 543, 0);
+                                await AddBookAsync("000000011", "La comedia humana", 534, 2);
+                                await AddBookAsync("000000012", "El extranjero", 879, 6);
+                                await AddBookAsync("000000013", "Drácula", 743, 5);
+                                await AddBookAsync("000000014", "La divina comedia", 452, 3);
+                                await AddBookAsync("000000015", "Don Quijote de la mancha", 535, 4);
+                                await AddBookAsync("000000016", "Poesías completas", 564, 5);
+                                await AddBookAsync("000000017", "La montaña mágica", 644, 6);
+                                await AddBookAsync("000000018", "La naranja mecánica", 757, 9);
+                                await AddBookAsync("000000019", "La odiseai", 456, 10);
+                                await AddBookAsync("000000020", "El Principito", 1000, 12);
+                                await AddBookAsync("000000021", "En busca del tiempo perdido", 646, 3);
+                                await AddBookAsync("000000022", "Rayuela", 890, 2);
+                                await AddBookAsync("000000023", "El laberinto de la soledad", 532, 1);
+                                await AddBookAsync("000000024", "La guerra del fin del mundo", 646, 3);
+                                await AddBookAsync("000000025", "El túnel", 345, 1);
+                                await AddBookAsync("000000026", "El tambor de hojalata", 345, 5);
+                                await AddBookAsync("000000027", "Tres tristes tigres", 234, 6);
+                                await AddBookAsync("000000028", "A sangre fría", 234, 1);
+                                await AddBookAsync("000000029", "Tala", 123, 2);
+                                await AddBookAsync("000000030", "El nombre de la rosa", 546, 1);
+                                await _context.SaveChangesAsync();
+                        }
+                }
+
+                private async Task AddBookAsync(string serial, string name, int numPages, int numCopies)
+                {
+
+                        Book book = new()
+                        {
+                                Serial = serial,
+                                Name = name,
+                                Description = name,
+                                NumPages = numPages,
+                                NumCopies = numCopies,
+                                EditionDate = DateTime.Now,
+                                IsActive = true,
+                                IsStarred = true,
+                                Category = _context.Categories.FirstOrDefault(),
+                                Editorial = _context.Editoriales.FirstOrDefault()
+                        };
+
+                        _context.Books.Add(book);
                 }
         }
 }
