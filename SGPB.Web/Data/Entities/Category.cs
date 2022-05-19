@@ -15,7 +15,7 @@ namespace SGPB.Web.Data.Entities
                 //TODO: Pending to put the correct paths
                 [Display(Name = "Imagen")]
                 public string ImageFullPath => ImageId == Guid.Empty
-                ? $"images/noimage.png"
+                ? $"https://localhost:44369/images/noimage.png"
                 : $"https://sistemabibliotecario.blob.core.windows.net/categories/{ImageId}"; // blob en Azure
         }
 }

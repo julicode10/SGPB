@@ -26,12 +26,6 @@ namespace SGPB.Web.Data.Entities
                 [MaxLength(500, ErrorMessage = "El campo {0} debe tener máximo {1} caractéres.")]
                 public string Description { get; set; }
 
-                [Column(TypeName = "decimal(18,2)")]
-                [DisplayFormat(DataFormatString = "{0:C2}")]
-                [Display(Name = "Precio")]
-                [Required(ErrorMessage = "El campo {0} es obligatorio.")]
-                public decimal Price { get; set; }
-
                 [Display(Name = "Número de páginas")]
                 [Required(ErrorMessage = "El campo {0} es obligatorio.")]
                 public int NumPages { get; set; }
@@ -63,7 +57,7 @@ namespace SGPB.Web.Data.Entities
                 //TO DO: Pendiente cambiar los paths por los de Azure
                 [Display(Name = "Imagen")]
                 public string ImageFullPath => BookImages == null || BookImages.Count == 0
-                ? $"https://localhost:44390/images/noimage.png"
+                ? $"https://localhost:44369/images/noimage.png"
                 : BookImages.FirstOrDefault().ImageFullPath;
 
         }

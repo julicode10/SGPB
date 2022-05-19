@@ -1,0 +1,64 @@
+﻿@model SGPB.Web.Models.BookViewModel
+<div class="form-floating mb-3">
+    <label asp-for="Serial" class="control-label"></label>
+    <input asp-for="Serial" class="form-control" />
+    <span asp-validation-for="Serial" class="text-danger invalid-feedback"></span>
+</div>
+<div class="form-floating mb-3">
+    <label asp-for="Name" class="control-label"></label>
+    <input asp-for="Name" class="form-control" />
+    <span asp-validation-for="Name" class="text-danger invalid-feedback"></span>
+</div>
+<div class="form-floating mb-3">
+    <label asp-for="Description" class="control-label"></label>
+    <textarea asp-for="Description" class="form-control"></textarea>
+    <span asp-validation-for="Description" class="text-danger invalid-feedback"></span>
+</div>
+<div class="form-group mb-3">
+    <label asp-for="CategoryId" class="control-label"></label>
+    <select asp-for="CategoryId" asp-items="Model.Categories" class="form-control"></select>
+    <span asp-validation-for="CategoryId" class="text-danger invalid-feedback"></span>
+</div>
+<div class="form-group mb-3">
+    <label asp-for="EditorialId" class="control-label"></label>
+    <select asp-for="EditorialId" asp-items="Model.Editoriales" class="form-control"></select>
+    <span asp-validation-for="EditorialId" class="text-danger invalid-feedback"></span>
+</div>
+<div class="form-floating mb-3">
+    <label asp-for="NumPages" class="control-label"></label>
+    <input asp-for="NumPages" class="form-control" type="number"/>
+    <span asp-validation-for="NumPages" class="text-danger invalid-feedback"></span>
+</div>
+<div class="form-floating mb-3">
+    <label asp-for="NumCopies" class="control-label"></label>
+    <input asp-for="NumCopies" class="form-control" type="number"/>
+    <span asp-validation-for="NumCopies" class="text-danger invalid-feedback"></span>
+</div>
+<div class="form-floating mb-3">
+    <label asp-for="EditionDate" class="control-label" ></label>
+    <input asp-for="EditionDate" class="form-control" type="date"/>
+    <span asp-validation-for="EditionDate" class="text-danger invalid-feedback"></span>
+</div>
+
+<div class="form-floating mb-3">
+    <label asp-for="ImageFile" class="control-label"></label>
+    <input asp-for="ImageFile" type="file" class="form-control" />
+    <span asp-validation-for="ImageFile" class="text-danger"></span>
+</div>
+
+<div class="form-floating mb-3">
+    <div class="checkbox">
+        <label>
+            <input asp-for="IsActive" /> @Html.DisplayNameFor(model => model.IsActive)
+        </label>
+    </div>
+</div>
+
+<div class="form-floating mb-3">
+    <div class="checkbox">
+        <label>
+            <input asp-for="IsStarred" /> @Html.DisplayNameFor(model => model.IsStarred)
+        </label>
+    </div>
+</div>
+
