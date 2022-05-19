@@ -7,14 +7,14 @@
     <link rel="stylesheet" href="~/lib/bootstrap/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/lib/font-awesome/css/all.css" />
     <link rel="stylesheet" href="~/css/site.css" />
-    <link rel="shortcut icon" href="~/img/home/logo.svg" />
+    <link rel="shortcut icon" href="~/images/logo.svg" />
 </head>
 <body>
     <header class="mb-3">
         <nav class="navbar fixed-top navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow">
             <div class="container-fluid">
                 <a class="navbar-brand white-text" asp-area="" asp-controller="Home" asp-action="Index">
-                    <img src="~/img/home/logo.svg" height="40px" width="40px" alt="SGPB | Biblioteca">
+                    <img src="~/images/logo.svg" height="40px" width="40px" alt="SGPB | Biblioteca">
                     <span class="navbar-brand mb-0 h1">SGPB | Biblioteca</span>
 
                 </a>
@@ -38,7 +38,7 @@
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <a class="dropdown-item" href="#">Tipo Documento</a>
-                                <a class="dropdown-item" href="#">Categorias</a>
+                                <a class="dropdown-item" asp-area="" asp-controller="Categories" asp-action="Index">Categorias</a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="#">Something else here</a>
                             </div>
@@ -64,8 +64,8 @@
         <footer class="pt-4 my-md-5 pt-md-5 border-top">
             <div class="row">
                 <div class="col-12 col-md">
-                    <img class="mb-2" src="~/img/home/logo.svg" alt="" width="24" height="24">
-                    <small class="d-block mb-3 text-muted">© 2017-2021</small>
+                    <img class="mb-2" src="~/images/logo.svg" alt="" width="24" height="24">
+                    <small class="d-block mb-3 text-muted">© 2022</small>
                 </div>
                 <div class="col-6 col-md">
                     <h5>Features</h5>

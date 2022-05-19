@@ -1,0 +1,13 @@
+﻿@model SGPB.Web.Models.CategoryViewModel
+
+<div class="form-floating mb-3">
+    <label asp-for="Name" class="control-label"></label>
+    <input asp-for="Name" class="form-control" />
+    <span asp-validation-for="Name" class="text-danger invalid-feedback"></span>
+</div>
+
+<div class="form-floating mb-3">
+    <label asp-for="ImageFile" class="control-label"></label>
+    <input asp-for="ImageFile" type="file" class="form-control" />
+    <span asp-validation-for="ImageFile" class="text-danger invalid-feedback"></span>
+</div>
