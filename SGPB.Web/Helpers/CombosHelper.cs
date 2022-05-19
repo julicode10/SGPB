@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using SGPB.Web.Data;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace SGPB.Web.Helpers
 {
@@ -52,5 +54,25 @@ namespace SGPB.Web.Helpers
 
                         return list;
                 }
+
+                public async Task<IEnumerable<SelectListItem>> GetComboDocumentTypesAsync()
+                {
+                        List<SelectListItem> list = await _context.DocumentTypes.Select(x => new SelectListItem
+                        {
+                                Text = x.Name,
+                                Value = $"{x.Id}"
+                        })
+                            .OrderBy(x => x.Text)
+                            .ToListAsync();
+
+                        list.Insert(0, new SelectListItem
+                        {
+                                Text = "[Seleccione un tipo de documento...]",
+                                Value = "0"
+                        });
+
+                        return list;
+                }
+
         }
 }
