@@ -9,10 +9,11 @@ namespace SGPB.Web.Data
                 {
                 }
 
-
                 public DbSet<Category> Categories { get; set; }
 
                 public DbSet<Editorial> Editoriales { get; set; }
+
+                public DbSet<DocumentType> DocumentTypes { get; set; }
 
                 public DbSet<Book> Books { get; set; }
                 public DbSet<BookImage> BookImages { get; set; }
@@ -30,8 +31,12 @@ namespace SGPB.Web.Data
                                          .HasIndex(e => e.Name)
                                          .IsUnique();
 
+                        modelBuilder.Entity<DocumentType>()
+                                         .HasIndex(d => d.Name)
+                                         .IsUnique();
+
                         modelBuilder.Entity<Book>()
-                                         .HasIndex(e => e.Serial)
+                                         .HasIndex(b => b.Serial)
                                          .IsUnique();
 
 

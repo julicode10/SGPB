@@ -1,6 +1,6 @@
-﻿@model IEnumerable<SGPB.Web.Data.Entities.Category>
+﻿@model IEnumerable<SGPB.Web.Data.Entities.Editorial>
 @{
-    ViewData["Title"] = "Categorías";
+    ViewData["Title"] = "Editoriales";
 }
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
 <link rel="stylesheet" href="~/lib/font-awesome/css/fontawesome.css" />
@@ -11,7 +11,7 @@
 <header class="bg-primary py-5 mt-lg-5">
     <div class="container px-4 px-lg-5 my-2">
         <div class="text-center text-white">
-            <h1 class="display-4 fw-bolder">Categorías</h1>
+            <h1 class="display-4 fw-bolder">Editoriales</h1>
         </div>
     </div>
 </header>
@@ -35,9 +35,6 @@
                                     <th>
                                         @Html.DisplayNameFor(model => model.Name)
                                     </th>
-                                    <th>
-                                        @Html.DisplayNameFor(model => model.ImageFullPath)
-                                    </th>
                                     <th>Opciones</th>
                                 </tr>
                             </thead>
@@ -47,9 +44,6 @@
                                     <tr>
                                         <td>
                                             @Html.DisplayFor(modelItem => item.Name)
-                                        </td>
-                                        <td>
-                                            <img src="@item.ImageFullPath" style="width:100px;height:100px;max-width: 100%; height: auto;" />
                                         </td>
                                         <td>
                                             <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-outline-warning"><i class="fas fa-edit"></i></a>
@@ -87,8 +81,7 @@
                [25, 50, 100, 200, "Todos"]
            ]
        });
-        sc_deleteDialog.openModal('deleteItem', true, 'btnYesDelete', '/Categories/Delete/', false);
+        sc_deleteDialog.openModal('deleteItem', true, 'btnYesDelete', '/Editoriales/Delete/', false);
     });
 </script>
 }
-

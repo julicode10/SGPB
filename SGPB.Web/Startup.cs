@@ -27,7 +27,7 @@ namespace SGPB.Web
                         });
                         services.AddScoped<IBlobHelper, BlobHelper>();
                         services.AddScoped<IConverterHelper, ConverterHelper>();
-
+                        services.AddTransient<SeedDb>();
                         services.AddControllersWithViews();
                 }
 
