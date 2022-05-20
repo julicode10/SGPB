@@ -1,10 +1,12 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using SGPB.Web.Data;
+using SGPB.Web.Data.Entities;
 using SGPB.Web.Helpers;
 
 namespace SGPB.Web
@@ -25,10 +27,27 @@ namespace SGPB.Web
                         {
                                 cfg.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
                         });
+                        services.AddIdentity<User, IdentityRole>(cfg =>
+                        {
+                                cfg.User.RequireUniqueEmail = true;
+                                cfg.Password.RequireDigit = false;
+                                cfg.Password.RequiredUniqueChars = 0;
+                                cfg.Password.RequireLowercase = false;
+                                cfg.Password.RequireNonAlphanumeric = false;
+                                cfg.Password.RequireUppercase = false;
+                        }).AddEntityFrameworkStores<ApplicationDbContext>();
+
+                        services.ConfigureApplicationCookie(options =>
+                        {
+                                options.LoginPath = "/Account/NotAuthorized";
+                                options.AccessDeniedPath = "/Account/NotAuthorized";
+                        });
+
                         services.AddScoped<IBlobHelper, BlobHelper>();
                         services.AddScoped<IConverterHelper, ConverterHelper>();
                         services.AddScoped<ICombosHelper, CombosHelper>();
                         services.AddTransient<SeedDb>();
+                        services.AddScoped<IUserHelper, UserHelper>();
                         services.AddControllersWithViews();
                 }
 
@@ -37,11 +56,13 @@ namespace SGPB.Web
                 {
                         if (env.IsDevelopment())
                         {
-                                app.UseDeveloperExceptionPage();
+                                app.UseStatusCodePagesWithReExecute("/error/{0}");
+                                //app.UseDeveloperExceptionPage();
                         }
                         else
                         {
-                                app.UseExceptionHandler("/Home/Error");
+                                //app.UseExceptionHandler("/Home/Error");
+                                app.UseStatusCodePagesWithReExecute("/error/{0}");
                                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                                 app.UseHsts();
                         }
@@ -49,8 +70,9 @@ namespace SGPB.Web
                         app.UseStaticFiles();
 
                         app.UseRouting();
-
+                        app.UseAuthentication();
                         app.UseAuthorization();
+                        
 
                         app.UseEndpoints(endpoints =>
                         {

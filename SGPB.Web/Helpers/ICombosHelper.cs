@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace SGPB.Web.Helpers
 {
@@ -7,6 +8,8 @@ namespace SGPB.Web.Helpers
         {
                 IEnumerable<SelectListItem> GetComboCategories();
                 IEnumerable<SelectListItem> GetComboEditoriales();
+
+                Task<IEnumerable<SelectListItem>> GetComboDocumentTypesAsync();
         }
 
 }
