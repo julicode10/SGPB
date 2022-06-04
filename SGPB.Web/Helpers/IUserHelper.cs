@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using SGPB.Web.Data.Entities;
+using SGPB.Web.Models;
 using System.Threading.Tasks;
 
 namespace SGPB.Web.Helpers
@@ -15,6 +16,11 @@ namespace SGPB.Web.Helpers
                 Task AddUserToRoleAsync(User user, string roleName);
 
                 Task<bool> IsUserInRoleAsync(User user, string roleName);
+
+                Task<SignInResult> LoginAsync(LoginViewModel model);
+
+                Task LogoutAsync();
+
         }
 
 }

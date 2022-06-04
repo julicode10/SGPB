@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SGPB.Web.Data;
 using SGPB.Web.Data.Entities;
@@ -11,6 +12,7 @@ using System.Threading.Tasks;
 
 namespace SGPB.Web.Controllers
 {
+        [Authorize(Roles = "Admin")]
         public class BooksController : Controller
         {
                 private readonly ApplicationDbContext _context;
