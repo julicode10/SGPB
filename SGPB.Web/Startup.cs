@@ -1,10 +1,12 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using SGPB.Web.Data;
+using SGPB.Web.Data.Entities;
 using SGPB.Web.Helpers;
 
 namespace SGPB.Web
@@ -21,6 +23,16 @@ namespace SGPB.Web
                 // This method gets called by the runtime. Use this method to add services to the container.
                 public void ConfigureServices(IServiceCollection services)
                 {
+                        services.AddIdentity<User, IdentityRole>(cfg =>
+                        {
+                                cfg.User.RequireUniqueEmail = true;
+                                cfg.Password.RequireDigit = false;
+                                cfg.Password.RequiredUniqueChars = 0;
+                                cfg.Password.RequireLowercase = false;
+                                cfg.Password.RequireNonAlphanumeric = false;
+                                cfg.Password.RequireUppercase = false;
+                        }).AddEntityFrameworkStores<ApplicationDbContext>();
+
                         services.AddDbContext<ApplicationDbContext>(cfg =>
                         {
                                 cfg.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
@@ -29,6 +41,7 @@ namespace SGPB.Web
                         services.AddScoped<IConverterHelper, ConverterHelper>();
                         services.AddScoped<ICombosHelper, CombosHelper>();
                         services.AddTransient<SeedDb>();
+                        services.AddScoped<IUserHelper, UserHelper>();
                         services.AddControllersWithViews();
                 }
 
@@ -47,9 +60,9 @@ namespace SGPB.Web
                         }
                         app.UseHttpsRedirection();
                         app.UseStaticFiles();
-
+                        app.UseAuthentication();
                         app.UseRouting();
-
+                        
                         app.UseAuthorization();
 
                         app.UseEndpoints(endpoints =>

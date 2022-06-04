@@ -12,13 +12,13 @@ namespace SGPB.Web.Data
         public class SeedDb
         {
                 private readonly ApplicationDbContext _context;
-
-
+                private readonly IUserHelper _userHelper;
                 private readonly IBlobHelper _blobHelper;
 
-                public SeedDb(ApplicationDbContext context, IBlobHelper blobHelper)
+                public SeedDb(ApplicationDbContext context, IUserHelper userHelper, IBlobHelper blobHelper)
                 {
                         _context = context;
+                        _userHelper = userHelper;
                         _blobHelper = blobHelper;
                 }
 
@@ -29,11 +29,50 @@ namespace SGPB.Web.Data
                         await CheckDocumentTypesAsync();
                         await CheckEditorialesAsync();
                         await CheckBooksAsync();
-
-
-
+                        await CheckRolesAsync();
+                        await CheckUserAsync("1010", "Julian", "Londoño", "julian@hotmail.com", "3000000000", "Calle Luna Calle Sol", UserType.Admin);
+                        await CheckUserAsync("2020", "Juan Fernando", "Perez", "juanf@hotmail.com", "3000000000", "Calle Luna Calle Sol", UserType.Admin);
+                        await CheckUserAsync("3030", "Sol", "Garcia", "solga@hotmail.com", "3000000000", "Calle Luna Calle Sol", UserType.User);
+                        await CheckUserAsync("4040", "Maria", "Serrano", "mserrano@hotmail.com", "3000000000", "Calle Luna Calle Sol", UserType.User);
                 }
 
+                private async Task CheckRolesAsync()
+                {
+                        await _userHelper.CheckRoleAsync(UserType.Admin.ToString());
+                        await _userHelper.CheckRoleAsync(UserType.User.ToString());
+                }
+
+                private async Task<User> CheckUserAsync(
+                    string document,
+                    string firstName,
+                    string lastName,
+                    string email,
+                    string phone,
+                    string address,
+                    UserType userType)
+                {
+                        User user = await _userHelper.GetUserAsync(email);
+                        if (user == null)
+                        {
+                                user = new User
+                                {
+                                        FirstName = firstName,
+                                        LastName = lastName,
+                                        Email = email,
+                                        UserName = email,
+                                        PhoneNumber = phone,
+                                        Address = address,
+                                        Document = document,
+                                        DocumentType = _context.DocumentTypes.FirstOrDefault(),
+                                        UserType = userType
+                                };
+
+                                await _userHelper.AddUserAsync(user, "123456");
+                                await _userHelper.AddUserToRoleAsync(user, userType.ToString());
+                        }
+
+                        return user;
+                }
 
 
 
