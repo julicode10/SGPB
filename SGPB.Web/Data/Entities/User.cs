@@ -43,7 +43,7 @@ namespace SGPB.Web.Data.Entities
                 [Display(Name = "Tipo Documento")]
                 public DocumentType DocumentType { get; set; }
 
-                public ICollection<Lending> Lending { get; set; }
+                public ICollection<Lending> Lendings { get; set; }
 
                 [Display(Name = "Usuario")]
                 public string FullName => $"{FirstName} {LastName}";

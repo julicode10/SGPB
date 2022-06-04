@@ -8,6 +8,7 @@ using Microsoft.Extensions.Hosting;
 using SGPB.Web.Data;
 using SGPB.Web.Data.Entities;
 using SGPB.Web.Helpers;
+using System.Text.Json.Serialization;
 
 namespace SGPB.Web
 {
@@ -32,6 +33,9 @@ namespace SGPB.Web
                                 cfg.Password.RequireNonAlphanumeric = false;
                                 cfg.Password.RequireUppercase = false;
                         }).AddEntityFrameworkStores<ApplicationDbContext>();
+
+                        services.AddControllers().AddJsonOptions(x =>
+                                x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 
                         services.AddDbContext<ApplicationDbContext>(cfg =>
                         {
