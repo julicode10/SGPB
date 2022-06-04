@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using SGPB.Web.Enums;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace SGPB.Web.Data.Entities
@@ -41,6 +42,8 @@ namespace SGPB.Web.Data.Entities
 
                 [Display(Name = "Tipo Documento")]
                 public DocumentType DocumentType { get; set; }
+
+                public ICollection<Lending> Lending { get; set; }
 
                 [Display(Name = "Usuario")]
                 public string FullName => $"{FirstName} {LastName}";
