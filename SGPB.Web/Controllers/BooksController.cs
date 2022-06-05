@@ -28,9 +28,9 @@ namespace SGPB.Web.Controllers
                         _converterHelper = converterHelper;
                 }
 
-                public async Task<IActionResult> Index()
+                public IActionResult Index()
                 {
-                        return View(await _context.Books
+                        return View( _context.Books
                             .Include(b => b.Category)
                             .Include(b => b.Editorial)
                             .Include(b => b.BookImages)
