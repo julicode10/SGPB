@@ -6,6 +6,7 @@ using SGPB.Web.Data.Entities;
 using SGPB.Web.Helpers;
 using SGPB.Web.Models;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace SGPB.Web.Controllers
@@ -26,7 +27,10 @@ namespace SGPB.Web.Controllers
                 }
                 public async Task<IActionResult> Index()
                 {
-                        return View(await _context.Categories.ToListAsync());
+                        return View(await _context.Categories
+                                        .OrderByDescending(b => b.Id)
+                                        .ToListAsync()
+                                );
                 }
 
                 public IActionResult Create()

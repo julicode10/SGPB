@@ -31,9 +31,10 @@ namespace SGPB.Web.Controllers
                 public async Task<IActionResult> Index()
                 {
                         return View(await _context.Books
-                            .Include(c => c.Category)
-                            .Include(e => e.Editorial)
-                            .Include(p => p.BookImages)
+                            .Include(b => b.Category)
+                            .Include(b => b.Editorial)
+                            .Include(b => b.BookImages)
+                            .OrderByDescending(b => b.Id)
                               .ToListAsync());
                 }
 
@@ -46,7 +47,6 @@ namespace SGPB.Web.Controllers
                                 IsActive = true,
                                 IsStarred = true
                         };
-
                         return View(model);
                 }
 
@@ -106,6 +106,7 @@ namespace SGPB.Web.Controllers
                             .Include(p => p.Category)
                             .Include(e => e.Editorial)
                             .Include(p => p.BookImages)
+    
                             .FirstOrDefaultAsync(p => p.Id == id);
                         if (book == null)
                         {
@@ -178,7 +179,6 @@ namespace SGPB.Web.Controllers
                         {
                                 return NotFound();
                         }
-
                         try
                         {
                                 _context.Books.Remove(book);
@@ -192,6 +192,7 @@ namespace SGPB.Web.Controllers
                         return RedirectToAction(nameof(Index));
                 }
 
+                [AllowAnonymous]
                 public async Task<IActionResult> Details(int? id)
                 {
                         if (id == null)
@@ -284,7 +285,5 @@ namespace SGPB.Web.Controllers
                         await _context.SaveChangesAsync();
                         return RedirectToAction(nameof(Details), new { Id = book.Id });
                 }
-
-
         }
 }

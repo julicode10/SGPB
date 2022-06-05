@@ -23,7 +23,6 @@ namespace SGPB.Web.Models
                 [JsonIgnore]
                 [NotMapped]
                 public int EditorialId { get; set; }
-
                 public IEnumerable<SelectListItem> Categories { get; set; }
 
                 public IEnumerable<SelectListItem> Editoriales { get; set; }

@@ -1,4 +1,5 @@
-﻿@{
+﻿@model IEnumerable<SGPB.Web.Data.Entities.Book>
+@{
     ViewData["Title"] = "Home Page";
 }
 
@@ -16,291 +17,30 @@
     </div>
 </section>
 <section class="py-3">
-    <div class="container px-4 px-lg-5">
+    <div class="container mx-auto" >
         <div class="row gx-4 gx-lg-5 row-cols-1 row-cols-sm-1 row-cols-md-3 row-cols-xl-4 justify-content-center">
-            <div class="col mb-5">
-                <div class="card h-100"><img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="...">
-                    <div class="card-body p-4">
-                        <div class="text-center">
-                            <h5 class="fw-bolder">Fancy Product</h5><!-- Product price-->$40.00 - $80.00
-                        </div>
-                    </div>
-                    <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                        <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">View options</a></div>
-                    </div>
-                </div>
-            </div>
+            @foreach (var item in Model)
+             {
             <div class="col mb-5">
                 <div class="card h-100">
-                    <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem;">Sale</div><!-- Product image--><img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..."><!-- Product details-->
+                    <div class="badge badge-primary text-white position-absolute" style="top: 0.5rem; right: 0.5rem; ">@Html.DisplayFor(modelItem => item.Category.Name)</div>
+                    <img class="card-img-top" style="width:100%; height:250px" src="@item.ImageFullPath" alt="@item.Name">
                     <div class="card-body p-4">
                         <div class="text-center">
-                            <h5 class="fw-bolder">Special Item</h5>
+                            <h5 class="fw-bolder">@item.Name</h5>
                             <div class="d-flex justify-content-center small text-warning mb-2">
-                                <div class="bi-star-fill"></div>
-                                <div class="bi-star-fill"></div>
-                                <div class="bi-star-fill"></div>
-                                <div class="bi-star-fill"></div>
-                                <div class="bi-star-fill"></div>
-                            </div><span class="text-muted text-decoration-line-through">$20.00</span>$18.00
+                            </div><span class="text-muted text-decoration-line-through">@item.Description.ToString().Substring(0, (item.Description.Length > 70) ? 70 : item.Description.Length )
+</span>
                         </div>
-                    </div><!-- Product actions-->
-                    <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                        <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">Add to cart</a></div>
                     </div>
-                </div>
-            </div>
-            <div class="col mb-5">
-                <div class="card h-100">
-                    <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem;">Sale</div><!-- Product image--><img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..."><!-- Product details-->
-                    <div class="card-body p-4">
+                    <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
                         <div class="text-center">
-                            <h5 class="fw-bolder">Sale Item</h5><!-- Product price--><span class="text-muted text-decoration-line-through">$50.00</span>$25.00
+                                <a asp-area="" asp-controller="Books" asp-action="Details" asp-route-id="@item.Id" class="btn btn-outline-primary mt-auto">Ver más información</a>
                         </div>
-                    </div>
-                    <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                        <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">Add to cart</a></div>
                     </div>
                 </div>
             </div>
-            <div class="col mb-5">
-                <div class="card h-100"><img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="...">
-                    <div class="card-body p-4">
-                        <div class="text-center">
-                            <h5 class="fw-bolder">Popular Item</h5>
-                            <div class="d-flex justify-content-center small text-warning mb-2">
-                                <div class="bi-star-fill"></div>
-                                <div class="bi-star-fill"></div>
-                                <div class="bi-star-fill"></div>
-                                <div class="bi-star-fill"></div>
-                                <div class="bi-star-fill"></div>
-                            </div>
-                            $40.00
-                        </div>
-                    </div>
-                    <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                        <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">Ver más</a></div>
-                    </div>
-                </div>
-            </div>
-            <div class="col mb-5">
-                <div class="card h-100">
-                    <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem;">Sale</div><!-- Product image--><img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..."><!-- Product details-->
-                    <div class="card-body p-4">
-                        <div class="text-center">
-                            <h5 class="fw-bolder">Sale Item</h5><span class="text-muted text-decoration-line-through">$50.00</span>$25.00
-                        </div>
-                    </div>
-                    <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                        <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">Ver más</a></div>
-                    </div>
-                </div>
-            </div>
-            <div class="col mb-5">
-                <div class="card h-100">
-                    <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="...">
-                    <div class="card-body p-4">
-                        <div class="text-center">
-                            <h5 class="fw-bolder">Fancy Product</h5>$120.00 - $280.00
-                        </div>
-                    </div>
-                    <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                        <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">Ver más</a></div>
-                    </div>
-                </div>
-            </div>
-            <div class="col mb-5">
-                <div class="card h-100">
-                    <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem;">Sale</div>
-                    <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="...">
-                    <div class="card-body p-4">
-                        <div class="text-center">
-                            <h5 class="fw-bolder">Special Item
-                            <div class="d-flex justify-content-center small text-warning mb-2">
-                                <div class="bi-star-fill"></div>
-                                <div class="bi-star-fill"></div>
-                                <div class="bi-star-fill"></div>
-                                <div class="bi-star-fill"></div>
-                                <div class="bi-star-fill"></div>
-                            </div><span class="text-muted text-decoration-line-through">$20.00</span>$18.00
-                        </div>
-                    </div>
-                    <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                        <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">Ver más</a></div>
-                    </div>
-                </div>
-            </div>
-            <div class="col mb-5">
-                <div class="card h-100">
-                    <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="...">
-                    <div class="card-body p-4">
-                        <div class="text-center">
-                            <h5 class="fw-bolder">Popular Item</h5>
-                            <div class="d-flex justify-content-center small text-warning mb-2">
-                                <div class="bi-star-fill"></div>
-                                <div class="bi-star-fill"></div>
-                                <div class="bi-star-fill"></div>
-                                <div class="bi-star-fill"></div>
-                                <div class="bi-star-fill"></div>
-                            </div>$40.00
-                        </div>
-                    </div>
-                    <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                        <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">Ver más</a></div>
-                    </div>
-                </div>
-            </div>
+            }
         </div>
     </div>
 </section>
-<section class="py-5">
-    <div class="container px-4 px-lg-5 my-5">
-        <div class="text-center mb-3">
-            <h2 class="fw-bolder">Libro Recomendado</h2>
-        </div>
-        <div class="row gx-4 gx-lg-5 align-items-center">
-            <div class="col-md-6"><img class="card-img-top mb-5 mb-md-0" src="https://dummyimage.com/600x700/dee2e6/6c757d.jpg" alt="..."></div>
-            <div class="col-md-6">
-                <div class="small mb-1">Programación</div>
-                <h1 class="display-5 fw-bolder">Arquitectura de software</h1>
-                <div class="fs-5 mb-5"><span class="text-decoration-line-through">Unidades disponibles</span><span>15</span></div>
-                <p class="lead">Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium at dolorem quidem modi. Nam sequi consequatur obcaecati excepturi alias magni, accusamus eius blanditiis delectus ipsam minima ea iste laborum vero?</p>
-                <div class="d-flex"><button class="btn btn-outline-dark flex-shrink-0" type="button"><i class="bi-cart-fill me-1"></i>Ver más</button></div>
-            </div>
-        </div>
-    </div>
-</section>
-<header class="bg-dark py-5">
-    <div class="container px-5">
-        <div class="row gx-5 justify-content-center">
-            <div class="col-lg-6">
-                <div class="text-center my-5">
-                    <h1 class="display-5 fw-bolder text-white mb-2">Presta los libros de una manera diferente</h1>
-                    <p class="lead text-white-50 mb-4">Registrate y ven a disfrutar del mundo de las letras </p>
-                    <div class="d-grid gap-3 d-sm-flex justify-content-sm-center">
-                        <a class="btn btn-primary btn-lg px-4 me-sm-3 mr-2" href="#features">Registrate</a>
-                        <a class="btn btn-outline-light btn-lg px-4 ml-2" href="#!">Inicia sesión</a></div>
-                </div>
-            </div>
-        </div>
-    </div>
-</header>
-<section class="py-5 border-bottom">
-    <div class="container px-5 my-5 px-5">
-        <div class="text-center mb-5">
-            <h2 class="fw-bolder">Nuestros lectores</h2>
-            <p class="lead mb-0">A nuestros lectores les encanta aprender con nosotros</p>
-        </div>
-        <div class="row gx-5 justify-content-center">
-            <div class="col-lg-6">
-                <!-- Testimonial 1-->
-                <div class="card mb-4">
-                    <div class="card-body p-4">
-                        <div class="d-flex">
-                            <div class="flex-shrink-0"><i class="bi bi-chat-right-quote-fill text-primary fs-1"></i></div>
-                            <div class="ms-4">
-                                <p class="mb-1">Gracias por armar un producto tan bueno. ¡Nos encantó aprender contigo, y te recomendaremos a otros!</p>
-                                <div class="small text-muted">- Fernando Pérez</div>
-                            </div>
-                        </div>
-                    </div>
-                </div><!-- Testimonial 2-->
-                <div class="card">
-                    <div class="card-body p-4">
-                        <div class="d-flex">
-                            <div class="flex-shrink-0"><i class="bi bi-chat-right-quote-fill text-primary fs-1"></i></div>
-                            <div class="ms-4">
-                                <p class="mb-1">Ahora puedo gestionar los prestamos de mis libros favoritos de una manera fácil</p>
-                                <div class="small text-muted">Julian Londoño</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-<section class="py-5 bg-light">
-    <div class="container px-4 px-lg-5 mt-5">
-        <h2 class="fw-bolder mb-4">Últimos libros</h2>
-        <div class="row gx-4 gx-lg-5 row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-            <div class="col mb-5">
-                <div class="card h-100">
-                    <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem;">Programación</div>
-                    <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="...">
-                    <div class="card-body p-4">
-                        <div class="text-center">
-                            <h5 class="fw-bolder">Java avanzado</h5>
-                            <div class="d-flex justify-content-center small text-warning mb-2">
-                                   <i class="fa fa-star"></i>
-                                   <i class="fa fa-star"></i>
-                            </div>
-                            <span class="text-muted text-decoration-line-through">Unidades disponibles: </span>8
-                        </div>
-                    </div>
-                    <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                        <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">Ver más</a></div>
-                    </div>
-                </div>
-            </div>
-            <div class="col mb-5">
-                <div class="card h-100">
-                    <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem;">Programación</div>
-                    <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="...">
-                    <div class="card-body p-4">
-                        <div class="text-center">
-                            <h5 class="fw-bolder">Java avanzado</h5>
-                            <div class="d-flex justify-content-center small text-warning mb-2">
-                                   <i class="fa fa-star"></i>
-                                   <i class="fa fa-star"></i>
-                            </div>
-                            <span class="text-muted text-decoration-line-through">Unidades disponibles: </span>8
-                        </div>
-                    </div>
-                    <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                        <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">Ver más</a></div>
-                    </div>
-                </div>
-            </div>
-            <div class="col mb-5">
-                <div class="card h-100">
-                    <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem;">Programación</div>
-                    <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="...">
-                    <div class="card-body p-4">
-                        <div class="text-center">
-                            <h5 class="fw-bolder">Java avanzado</h5>
-                            <div class="d-flex justify-content-center small text-warning mb-2">
-                                   <i class="fa fa-star"></i>
-                                   <i class="fa fa-star"></i>
-                            </div>
-                            <span class="text-muted text-decoration-line-through">Unidades disponibles: </span>8
-                        </div>
-                    </div>
-                    <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                        <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">Ver más</a></div>
-                    </div>
-                </div>
-            </div>
-            <div class="col mb-5">
-                <div class="card h-100">
-                    <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem;">Programación</div>
-                    <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="...">
-                    <div class="card-body p-4">
-                        <div class="text-center">
-                            <h5 class="fw-bolder">Java avanzado</h5>
-                            <div class="d-flex justify-content-center small text-warning mb-2">
-                                   <i class="fa fa-star"></i>
-                                   <i class="fa fa-star"></i>
-                            </div>
-                            <span class="text-muted text-decoration-line-through">Unidades disponibles: </span>8
-                        </div>
-                    </div>
-                    <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                        <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">Ver más</a></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-

@@ -511,11 +511,11 @@ namespace SGPB.Web.Migrations
             modelBuilder.Entity("SGPB.Web.Data.Entities.Book", b =>
                 {
                     b.HasOne("SGPB.Web.Data.Entities.Category", "Category")
-                        .WithMany()
+                        .WithMany("Books")
                         .HasForeignKey("CategoryId");
 
                     b.HasOne("SGPB.Web.Data.Entities.Editorial", "Editorial")
-                        .WithMany()
+                        .WithMany("Books")
                         .HasForeignKey("EditorialId");
 
                     b.Navigation("Category");
@@ -533,7 +533,7 @@ namespace SGPB.Web.Migrations
             modelBuilder.Entity("SGPB.Web.Data.Entities.Lending", b =>
                 {
                     b.HasOne("SGPB.Web.Data.Entities.User", "User")
-                        .WithMany("Lending")
+                        .WithMany("Lendings")
                         .HasForeignKey("UserId");
 
                     b.Navigation("User");
@@ -568,6 +568,16 @@ namespace SGPB.Web.Migrations
                     b.Navigation("LendingDetails");
                 });
 
+            modelBuilder.Entity("SGPB.Web.Data.Entities.Category", b =>
+                {
+                    b.Navigation("Books");
+                });
+
+            modelBuilder.Entity("SGPB.Web.Data.Entities.Editorial", b =>
+                {
+                    b.Navigation("Books");
+                });
+
             modelBuilder.Entity("SGPB.Web.Data.Entities.Lending", b =>
                 {
                     b.Navigation("LendingDetails");
@@ -575,7 +585,7 @@ namespace SGPB.Web.Migrations
 
             modelBuilder.Entity("SGPB.Web.Data.Entities.User", b =>
                 {
-                    b.Navigation("Lending");
+                    b.Navigation("Lendings");
                 });
 #pragma warning restore 612, 618
         }

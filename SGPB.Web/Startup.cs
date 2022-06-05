@@ -34,6 +34,7 @@ namespace SGPB.Web
                                 cfg.Password.RequireUppercase = false;
                         }).AddEntityFrameworkStores<ApplicationDbContext>();
 
+                        //Ignorar las referencias circulares
                         services.AddControllers().AddJsonOptions(x =>
                                 x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 

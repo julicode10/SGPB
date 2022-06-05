@@ -63,8 +63,9 @@ namespace SGPB.Web.Data
                                         PhoneNumber = phone,
                                         Address = address,
                                         Document = document,
-                                        DocumentType = _context.DocumentTypes.FirstOrDefault(),
+                                        DocumentType = _context.DocumentTypes.OrderBy(o => Guid.NewGuid()).First(),
                                         UserType = userType
+                                        
                                 };
 
                                 await _userHelper.AddUserAsync(user, "123456");
@@ -75,7 +76,19 @@ namespace SGPB.Web.Data
                 }
 
 
-
+                //private async Task CheckAuthorAsync()
+                //{
+                //        if (!_context.Authors.Any())
+                //        {
+                //                _context.Authors.Add(new Author { Name = "Gabriel García Márquez" });
+                //                _context.Authors.Add(new Author { Name = "Edgar Allan Poe" });
+                //                _context.Authors.Add(new Author { Name = "William Shakespeare" });
+                //               _context.Authors.Add(new Author { Name = "Jane Austen" });
+                //                _context.Authors.Add(new Author { Name = "Miguel de Cervantes" });
+                //                _context.Authors.Add(new Author { Name = "Mario Vargas Llosa" });
+                //               await _context.SaveChangesAsync();
+                //        }
+                //}
 
                 private async Task CheckCategoriesAsync()
                 {
@@ -180,8 +193,8 @@ namespace SGPB.Web.Data
                                 EditionDate = DateTime.Now,
                                 IsActive = true,
                                 IsStarred = true,
-                                Category = _context.Categories.FirstOrDefault(),
-                                Editorial = _context.Editoriales.FirstOrDefault()
+                                Category = _context.Categories.OrderBy(o => Guid.NewGuid()).First(),
+                                Editorial = _context.Editoriales.OrderBy(o => Guid.NewGuid()).First()
                         };
 
                         _context.Books.Add(book);

@@ -41,7 +41,7 @@ namespace SGPB.Web.Controllers
                                         return RedirectToAction("Index", "Home");
                                 }
 
-                                ModelState.AddModelError(string.Empty, "Email or password incorrect.");
+                                ModelState.AddModelError(string.Empty, "Email o contraseña incorrectos");
                         }
 
                         return View(model);

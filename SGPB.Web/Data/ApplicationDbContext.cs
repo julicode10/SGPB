@@ -14,12 +14,12 @@ namespace SGPB.Web.Data
 
                 public DbSet<Editorial> Editoriales { get; set; }
 
+
                 public DbSet<DocumentType> DocumentTypes { get; set; }
 
                 public DbSet<Lending> Lendings { get; set; }
 
                 public DbSet<LendingDetail> LendingDetails { get; set; }
-
 
                 public DbSet<Book> Books { get; set; }
                 public DbSet<BookImage> BookImages { get; set; }
@@ -28,7 +28,6 @@ namespace SGPB.Web.Data
                 protected override void OnModelCreating(ModelBuilder modelBuilder)
                 {
                         base.OnModelCreating(modelBuilder);
-
                         modelBuilder.Entity<Category>()
                                          .HasIndex(c => c.Name)
                                          .IsUnique();
@@ -44,9 +43,6 @@ namespace SGPB.Web.Data
                         modelBuilder.Entity<Book>()
                                          .HasIndex(b => b.Serial)
                                          .IsUnique();
-
-
-
                 }
         }
 
