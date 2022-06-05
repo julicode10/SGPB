@@ -5,9 +5,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
 using SGPB.Web.Data;
 using SGPB.Web.Data.Entities;
 using SGPB.Web.Helpers;
+using System.Text;
 using System.Text.Json.Serialization;
 
 namespace SGPB.Web
@@ -33,6 +35,19 @@ namespace SGPB.Web
                                 cfg.Password.RequireNonAlphanumeric = false;
                                 cfg.Password.RequireUppercase = false;
                         }).AddEntityFrameworkStores<ApplicationDbContext>();
+
+                        services.AddAuthentication()
+                            .AddCookie()
+                            .AddJwtBearer(cfg =>
+                            {
+                                    cfg.TokenValidationParameters = new TokenValidationParameters
+                                    {
+                                            ValidIssuer = Configuration["Tokens:Issuer"],
+                                            ValidAudience = Configuration["Tokens:Audience"],
+                                            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Tokens:Key"]))
+                                    };
+                            });
+
 
                         //Ignorar las referencias circulares
                         services.AddControllers().AddJsonOptions(x =>
@@ -67,7 +82,7 @@ namespace SGPB.Web
                         app.UseStaticFiles();
                         app.UseAuthentication();
                         app.UseRouting();
-                        
+
                         app.UseAuthorization();
 
                         app.UseEndpoints(endpoints =>
