@@ -52,5 +52,23 @@ namespace SGPB.Web.Helpers
 
                         return list;
                 }
+
+                public IEnumerable<SelectListItem> GetComboDocumentTypes()
+                {
+                        List<SelectListItem> list = _context.DocumentTypes.Select(t => new SelectListItem
+                        {
+                                Text = t.Name,
+                                Value = $"{t.Id}"
+                        })
+                            .OrderBy(t => t.Text)
+                            .ToList();
+
+                        list.Insert(0, new SelectListItem
+                        {
+                                Text = "[Seleccione un tipo de documento...]",
+                                Value = "0"
+                        });
+                        return list;
+                }
         }
 }

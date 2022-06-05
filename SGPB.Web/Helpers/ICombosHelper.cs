@@ -7,6 +7,8 @@ namespace SGPB.Web.Helpers
         {
                 IEnumerable<SelectListItem> GetComboCategories();
                 IEnumerable<SelectListItem> GetComboEditoriales();
+
+                IEnumerable<SelectListItem> GetComboDocumentTypes();
         }
 
 }

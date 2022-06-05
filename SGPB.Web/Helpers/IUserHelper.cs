@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using SGPB.Web.Data.Entities;
+using SGPB.Web.Enums;
 using SGPB.Web.Models;
+using System;
 using System.Threading.Tasks;
 
 namespace SGPB.Web.Helpers
@@ -22,6 +24,8 @@ namespace SGPB.Web.Helpers
                 Task LogoutAsync();
 
                 Task<SignInResult> ValidatePasswordAsync(User user, string password);
+
+                Task<User> AddUserAsync(AddUserViewModel model, Guid imageId, UserType userType);
 
         }
 

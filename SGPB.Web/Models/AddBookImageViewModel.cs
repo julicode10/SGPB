@@ -7,7 +7,7 @@ namespace SGPB.Web.Models
         {
                 public int BookId { get; set; }
 
-                [Display(Name = "Image")]
+                [Display(Name = "Imagen")]
                 [Required]
                 public IFormFile ImageFile { get; set; }
 

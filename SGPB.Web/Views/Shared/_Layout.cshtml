@@ -42,12 +42,9 @@
                                     Configuraciones
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    @*<a class="dropdown-item" href="#">Tipo Documento</a>*@
                                     <a class="dropdown-item" asp-area="" asp-controller="Categories" asp-action="Index">Categorias</a>
                                     <a class="dropdown-item" asp-area="" asp-controller="Editoriales" asp-action="Index">Editoriales</a>
                                     <a class="dropdown-item" asp-area="" asp-controller="DocumentTypes" asp-action="Index">Tipos de documentos</a>
-                                    <div class="dropdown-divider"></div>
-                                    @*<a class="dropdown-item" href="#">Something else here</a>*@
                                 </div>
                             </li>
                         }
@@ -70,7 +67,7 @@
                     {
 
                         <div class="my-2 my-lg-0">
-                            @*<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Registrate</button>*@
+                            <a class="btn btn-outline-success my-2 my-sm-0" asp-area="" asp-controller="Account" asp-action="Register">Registrate</a>
                             <a class="btn btn-outline-primary my-2 my-sm-0" asp-area="" asp-controller="Account" asp-action="Login">Iniciar Sesión</a>
                         </div>
                     }
