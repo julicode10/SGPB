@@ -45,7 +45,7 @@ namespace SGPB.Web.Models
                     : $"https://sistemabibliotecario.blob.core.windows.net/users/{ImageId}";
 
                 [Display(Name = "Imagen")]
-                public IFormFile ImageFile { get; set; }
+                public IFormFile? ImageFile { get; set; }
 
                 [Display(Name = "Tipo Documento")]
                 [Range(1, int.MaxValue, ErrorMessage = "Debes de seleccionar un tipo de documento.")]

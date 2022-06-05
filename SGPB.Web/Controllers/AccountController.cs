@@ -98,7 +98,7 @@ namespace SGPB.Web.Controllers
                                 User user = await _userHelper.AddUserAsync(model, imageId, UserType.User);
                                 if (user == null)
                                 {
-                                        ModelState.AddModelError(string.Empty, "This email is already used.");
+                                        ModelState.AddModelError(string.Empty, "Este correo electrónico ya está en uso.");
                                         model.DocumentTypes = _combosHelper.GetComboDocumentTypes();
                                         return View(model);
                                 }
@@ -119,6 +119,92 @@ namespace SGPB.Web.Controllers
                         }
 
                         model.DocumentTypes = _combosHelper.GetComboDocumentTypes();
+                        return View(model);
+                }
+
+                public async Task<IActionResult> ChangeUser()
+                {
+                        User user = await _userHelper.GetUserAsync(User.Identity.Name);
+                        if (user == null)
+                        {
+                                return NotFound();
+                        }
+
+                        EditUserViewModel model = new EditUserViewModel
+                        {
+                                Address = user.Address,
+                                FirstName = user.FirstName,
+                                LastName = user.LastName,
+                                PhoneNumber = user.PhoneNumber,
+                                ImageId = user.ImageId,
+                                DocumentTypes = _combosHelper.GetComboDocumentTypes(),
+                                DocumentTypeId = user.DocumentType.Id,
+                     
+                                Id = user.Id,
+                                Document = user.Document
+                        };
+                        return View(model);
+                }
+
+                [HttpPost]
+                [ValidateAntiForgeryToken]
+                public async Task<IActionResult> ChangeUser(EditUserViewModel model)
+                {
+                        if (ModelState.IsValid)
+                        {
+                                Guid imageId = model.ImageId;
+
+                                if (model.ImageFile != null)
+                                {
+                                        imageId = await _blobHelper.UploadBlobAsync(model.ImageFile, "users");
+                                }
+
+                                User user = await _userHelper.GetUserAsync(User.Identity.Name);
+
+                                user.FirstName = model.FirstName;
+                                user.LastName = model.LastName;
+                                user.Address = model.Address;
+                                user.PhoneNumber = model.PhoneNumber;
+                                user.ImageId = imageId;
+                                user.DocumentType = await _context.DocumentTypes.FindAsync(model.DocumentTypeId);
+                                user.Document = model.Document;
+
+                                await _userHelper.UpdateUserAsync(user);
+                                return RedirectToAction("Index", "Home");
+                        }
+                        model.DocumentTypes = _combosHelper.GetComboDocumentTypes();
+                        return View(model);
+                }
+
+                public IActionResult ChangePassword()
+                {
+                        return View();
+                }
+
+                [HttpPost]
+                public async Task<IActionResult> ChangePassword(ChangePasswordViewModel model)
+                {
+                        if (ModelState.IsValid)
+                        {
+                                var user = await _userHelper.GetUserAsync(User.Identity.Name);
+                                if (user != null)
+                                {
+                                        var result = await _userHelper.ChangePasswordAsync(user, model.OldPassword, model.NewPassword);
+                                        if (result.Succeeded)
+                                        {
+                                                return RedirectToAction("ChangeUser");
+                                        }
+                                        else
+                                        {
+                                                ModelState.AddModelError(string.Empty, result.Errors.FirstOrDefault().Description);
+                                        }
+                                }
+                                else
+                                {
+                                        ModelState.AddModelError(string.Empty, "Usuario no encontrado.");
+                                }
+                        }
+
                         return View(model);
                 }
         }
