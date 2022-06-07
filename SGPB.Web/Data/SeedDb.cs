@@ -30,10 +30,10 @@ namespace SGPB.Web.Data
                         await CheckEditorialesAsync();
                         await CheckBooksAsync();
                         await CheckRolesAsync();
-                        await CheckUserAsync("1010", "Julian", "Londoño", "julian@hotmail.com", "3000000000", "Calle Luna Calle Sol", UserType.Admin);
-                        await CheckUserAsync("2020", "Juan Fernando", "Perez", "juanf@hotmail.com", "3000000000", "Calle Luna Calle Sol", UserType.Admin);
-                        await CheckUserAsync("3030", "Sol", "Garcia", "solga@hotmail.com", "3000000000", "Calle Luna Calle Sol", UserType.User);
-                        await CheckUserAsync("4040", "Maria", "Serrano", "mserrano@hotmail.com", "3000000000", "Calle Luna Calle Sol", UserType.User);
+                        await CheckUserAsync("1010", "Julian", "Londoño", "julian@yopmail.com", "3000000000", "Calle Luna Calle Sol", UserType.Admin);
+                        await CheckUserAsync("2020", "Juan Fernando", "Perez", "juanf@yopmail.com", "3000000000", "Calle Luna Calle Sol", UserType.Admin);
+                        await CheckUserAsync("3030", "Sol", "Garcia", "solga@yopmail.com", "3000000000", "Calle Luna Calle Sol", UserType.User);
+                        await CheckUserAsync("4040", "Maria", "Serrano", "mserrano@yopmail.com", "3000000000", "Calle Luna Calle Sol", UserType.User);
                 }
 
                 private async Task CheckRolesAsync()
@@ -70,25 +70,14 @@ namespace SGPB.Web.Data
 
                                 await _userHelper.AddUserAsync(user, "123456");
                                 await _userHelper.AddUserToRoleAsync(user, userType.ToString());
+
+                                string token = await _userHelper.GenerateEmailConfirmationTokenAsync(user);
+                                await _userHelper.ConfirmEmailAsync(user, token);
+
                         }
 
                         return user;
                 }
-
-
-                //private async Task CheckAuthorAsync()
-                //{
-                //        if (!_context.Authors.Any())
-                //        {
-                //                _context.Authors.Add(new Author { Name = "Gabriel García Márquez" });
-                //                _context.Authors.Add(new Author { Name = "Edgar Allan Poe" });
-                //                _context.Authors.Add(new Author { Name = "William Shakespeare" });
-                //               _context.Authors.Add(new Author { Name = "Jane Austen" });
-                //                _context.Authors.Add(new Author { Name = "Miguel de Cervantes" });
-                //                _context.Authors.Add(new Author { Name = "Mario Vargas Llosa" });
-                //               await _context.SaveChangesAsync();
-                //        }
-                //}
 
                 private async Task CheckCategoriesAsync()
                 {

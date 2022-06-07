@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using SGPB.Web.Data;
 using SGPB.Web.Data.Entities;
 using SGPB.Web.Enums;
 using SGPB.Web.Helpers;
 using SGPB.Web.Models;
+using SGPB.Web.Responses;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -16,17 +18,20 @@ namespace SGPB.Web.Controllers
                 private readonly IUserHelper _userHelper;
                 private readonly ICombosHelper _combosHelper;
                 private readonly IBlobHelper _blobHelper;
+                private readonly IMailHelper _mailHelper;
 
 
                 public AccountController(ApplicationDbContext context,
                                                         IUserHelper userHelper,
                                                         ICombosHelper combosHelper,
-                                                        IBlobHelper blobHelper)
+                                                        IBlobHelper blobHelper,
+                                                        IMailHelper mailHelper)
                 {
                         _context = context;
                         _userHelper = userHelper;
                         _combosHelper = combosHelper;
                         _blobHelper = blobHelper;
+                        _mailHelper = mailHelper;
                 }
 
                 public IActionResult Login()
@@ -98,10 +103,30 @@ namespace SGPB.Web.Controllers
                                 User user = await _userHelper.AddUserAsync(model, imageId, UserType.User);
                                 if (user == null)
                                 {
-                                        ModelState.AddModelError(string.Empty, "Este correo electrónico ya está en uso.");
+                                        ModelState.AddModelError(string.Empty, "Este correo ya está en uso.");
                                         model.DocumentTypes = _combosHelper.GetComboDocumentTypes();
                                         return View(model);
                                 }
+
+
+                                string myToken = await _userHelper.GenerateEmailConfirmationTokenAsync(user);
+                                string tokenLink = Url.Action("ConfirmEmail", "Account", new
+                                {
+                                        userid = user.Id,
+                                        token = myToken
+                                }, protocol: HttpContext.Request.Scheme);
+
+                                Response response = _mailHelper.SendMail(model.Username, "Confirmación de Email", $"<h1>Confirmación de Email</h1>" +
+                                    $"Permitir al usuario, " +
+                                    $"por favor haga clic en este enlace:</br></br><a href = \"{tokenLink}\">Confirmar Correo</a>");
+                                if (response.IsSuccess)
+                                {
+                                        ViewBag.Message = "Las instrucciones para permitir que su usuario ha sido enviado al correo electrónico.";
+                                        return View(model);
+                                }
+
+                                ModelState.AddModelError(string.Empty, response.Message);
+
 
                                 LoginViewModel loginViewModel = new LoginViewModel
                                 {
@@ -117,7 +142,6 @@ namespace SGPB.Web.Controllers
                                         return RedirectToAction("Index", "Home");
                                 }
                         }
-
                         model.DocumentTypes = _combosHelper.GetComboDocumentTypes();
                         return View(model);
                 }
@@ -139,7 +163,7 @@ namespace SGPB.Web.Controllers
                                 ImageId = user.ImageId,
                                 DocumentTypes = _combosHelper.GetComboDocumentTypes(),
                                 DocumentTypeId = user.DocumentType.Id,
-                     
+
                                 Id = user.Id,
                                 Document = user.Document
                         };
@@ -204,8 +228,30 @@ namespace SGPB.Web.Controllers
                                         ModelState.AddModelError(string.Empty, "Usuario no encontrado.");
                                 }
                         }
-
                         return View(model);
                 }
+
+                public async Task<IActionResult> ConfirmEmail(string userId, string token)
+                {
+                        if (string.IsNullOrEmpty(userId) || string.IsNullOrEmpty(token))
+                        {
+                                return NotFound();
+                        }
+
+                        User user = await _userHelper.GetUserAsync(new Guid(userId));
+                        if (user == null)
+                        {
+                                return NotFound();
+                        }
+
+                        IdentityResult result = await _userHelper.ConfirmEmailAsync(user, token);
+                        if (!result.Succeeded)
+                        {
+                                return NotFound();
+                        }
+
+                        return View();
+                }
+
         }
 }
