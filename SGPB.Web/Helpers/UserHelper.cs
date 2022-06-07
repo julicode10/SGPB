@@ -4,8 +4,6 @@ using SGPB.Web.Data;
 using SGPB.Web.Data.Entities;
 using SGPB.Web.Enums;
 using SGPB.Web.Models;
-using System;
-using System.Threading.Tasks;
 
 namespace SGPB.Web.Helpers
 {
@@ -131,8 +129,14 @@ namespace SGPB.Web.Helpers
                         return await _userManager.GenerateEmailConfirmationTokenAsync(user);
                 }
 
+                public async Task<string> GeneratePasswordResetTokenAsync(User user)
+                {
+                        return await _userManager.GeneratePasswordResetTokenAsync(user);
+                }
 
-
+                public async Task<IdentityResult> ResetPasswordAsync(User user, string token, string password)
+                {
+                        return await _userManager.ResetPasswordAsync(user, token, password);
+                }
         }
-
 }

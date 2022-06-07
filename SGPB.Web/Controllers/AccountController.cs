@@ -253,5 +253,63 @@ namespace SGPB.Web.Controllers
                         return View();
                 }
 
+                public IActionResult RecoverPassword()
+                {
+                        return View();
+                }
+
+                [HttpPost]
+                public async Task<IActionResult> RecoverPassword(RecoverPasswordViewModel model)
+                {
+                        if (ModelState.IsValid)
+                        {
+                                User user = await _userHelper.GetUserAsync(model.Email);
+                                if (user == null)
+                                {
+                                        ModelState.AddModelError(string.Empty, "El correo electrónico no corresponde a un usuario registrado.");
+                                        return View(model);
+                                }
+
+                                string myToken = await _userHelper.GeneratePasswordResetTokenAsync(user);
+                                string link = Url.Action(
+                                    "ResetPassword",
+                                    "Account",
+                                    new { token = myToken }, protocol: HttpContext.Request.Scheme);
+                                _mailHelper.SendMail(model.Email, "Restablecimiento de contraseña", $"<h1>Restablecimiento de contraseña</h1>" +
+                                    $"Para restablecer la contraseña haz click en este enlace:</br></br>" +
+                                    $"<a href = \"{link}\">Restablecer la contraseña</a>");
+                                ViewBag.Message = "Las instrucciones para recuperar su contraseña han sido enviadas al correo electrónico.";
+                                return View();
+
+                        }
+
+                        return View(model);
+                }
+
+                public IActionResult ResetPassword(string token)
+                {
+                        return View();
+                }
+
+                [HttpPost]
+                public async Task<IActionResult> ResetPassword(ResetPasswordViewModel model)
+                {
+                        User user = await _userHelper.GetUserAsync(model.UserName);
+                        if (user != null)
+                        {
+                                IdentityResult result = await _userHelper.ResetPasswordAsync(user, model.Token, model.Password);
+                                if (result.Succeeded)
+                                {
+                                        ViewBag.Message = "Restablecimiento de contraseña exitoso.";
+                                        return View();
+                                }
+
+                                ViewBag.Message = "Error al restablecer la contraseña.";
+                                return View(model);
+                        }
+
+                        ViewBag.Message = "Usuario no encontrado.";
+                        return View(model);
+                }
         }
 }

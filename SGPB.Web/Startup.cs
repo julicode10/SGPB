@@ -90,8 +90,8 @@ namespace SGPB.Web
                 {
                         if (env.IsDevelopment())
                         {
-                                //app.UseStatusCodePagesWithReExecute("/error/{0}");
-                                app.UseDeveloperExceptionPage();
+                                app.UseStatusCodePagesWithReExecute("/error/{0}");
+                                //app.UseDeveloperExceptionPage();
                         }
                         else
                         {
