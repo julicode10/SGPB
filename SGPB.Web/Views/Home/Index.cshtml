@@ -1,8 +1,46 @@
-﻿@{
+﻿@model IEnumerable<SGPB.Web.Data.Entities.Book>
+@{
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<header class="bg-primary py-5 mt-lg-5">
+    <div class="container px-4 px-lg-5 my-2">
+        <div class="text-center text-white">
+            <h1 class="display-4 fw-bolder">Sistema de Bibliotecas</h1>
+            <p class="lead fw-normal text-white-50 mb-0">Sistema de información de gestión y prestamos de libros</p>
+        </div>
+    </div>
+</header>
+<section class="py-3">
+    <div class="card-footer p-4 pt-0 border-bottom-0 bg-transparent  border-bottom">
+        <h2 class="fw-bolder mb-2 text-center font-weight-bold text-primary"><i class="fa fa-book-bookmark"></i> Catálogo de Libros <i class="fa fa-book-bookmark"></i></h2>
+    </div>
+</section>
+<section class="py-3">
+    <div class="container mx-auto" >
+        <div class="row gx-4 gx-lg-5 row-cols-1 row-cols-sm-1 row-cols-md-3 row-cols-xl-4 justify-content-center">
+            @foreach (var item in Model)
+             {
+            <div class="col mb-5">
+                <div class="card h-100">
+                    <div class="badge badge-primary text-white position-absolute" style="top: 0.5rem; right: 0.5rem; ">@Html.DisplayFor(modelItem => item.Category.Name)</div>
+                    <img class="card-img-top" style="width:100%; height:250px" src="@item.ImageFullPath" alt="@item.Name">
+                    <div class="card-body p-4">
+                        <div class="text-center">
+                            <h5 class="fw-bolder">@item.Name</h5>
+                            <div class="d-flex justify-content-center small text-warning mb-2">
+                                    <p>@item.Serial</p>
+                            </div><span class="text-muted text-decoration-line-through">Numero de páginas: @item.NumPages</span>
+                        </div>
+                    </div>
+                    <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                        <div class="text-center">
+                                <a asp-area="" asp-controller="Books" asp-action="Details" asp-route-id="@item.Id" class="btn btn-outline-primary mt-auto">Ver más información</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            }
+        </div>
+    </div>
+</section>

@@ -1,0 +1,42 @@
+﻿@model SGPB.Web.Models.EditUserViewModel
+@{
+    ViewData["Title"] = "Perfil";
+}
+
+<header class="bg-primary py-5 mt-lg-5">
+    <div class="container px-4 px-lg-5 my-2">
+        <div class="text-center text-white">
+            <h1 class="display-4 fw-bolder">Perfil</h1>
+        </div>
+    </div>
+</header>
+
+<section class="py-3">
+    <div class="container px-5 my-5 px-5" style="max-width: 80%;">
+            <div  class="row gx-5 justify-content-center">
+                    <div class="col-lg-6 d-flex justify-content-center mt-2">
+                <img src="@Model.ImageFullPath" style="width:250px;height:250px;border-radius:50%" />
+            </div>
+            </div>
+        <div class="row gx-5 justify-content-center">
+            
+            <div class="col-lg-6 mt-5">
+                <form asp-action="ChangeUser" enctype="multipart/form-data">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="Id" />
+                    <input type="hidden" asp-for="ImageId" />
+
+                    <partial name="_User" />
+
+                    <div class="form-group">
+                        <input type="submit" value="Guardar" class="btn btn-outline-primary" />
+                        <a asp-action="ChangePassword" class="btn btn-outline-warning">Cambiar contraseña</a>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
