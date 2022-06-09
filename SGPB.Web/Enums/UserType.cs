@@ -5,6 +5,4 @@
                 Admin,
                 User
         }
-
-
 }

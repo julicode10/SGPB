@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
+using System.Text.Json.Serialization;
 
 namespace SGPB.Web.Data.Entities
 {
@@ -34,7 +34,8 @@ namespace SGPB.Web.Data.Entities
                 [Required(ErrorMessage = "El campo {0} es obligatorio.")]
                 public int NumCopies { get; set; }
 
-                [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd hh:mm tt}")]
+                [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
+                [DataType(DataType.Date)]
                 [Display(Name = "Fecha")]
                 [Required(ErrorMessage = "El campo {0} es obligatorio.")]
                 public DateTime EditionDate { get; set; }
@@ -44,8 +45,9 @@ namespace SGPB.Web.Data.Entities
                 [Display(Name = "Está protagonizado")]
                 public bool IsStarred { get; set; }
 
+                [JsonIgnore]
                 public Category Category { get; set; }
-
+                [JsonIgnore]
                 public Editorial Editorial { get; set; }
 
                 public ICollection<BookImage> BookImages { get; set; }
@@ -57,7 +59,7 @@ namespace SGPB.Web.Data.Entities
                 //TO DO: Pendiente cambiar los paths por los de Azure
                 [Display(Name = "Imagen")]
                 public string ImageFullPath => BookImages == null || BookImages.Count == 0
-                ? $"https://localhost:44369/images/noimage.png"
+                ? $"https://sgpbweb.azurewebsites.net/images/noimage.png"
                 : BookImages.FirstOrDefault().ImageFullPath;
 
         }

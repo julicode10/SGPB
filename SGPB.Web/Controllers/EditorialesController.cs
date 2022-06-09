@@ -1,12 +1,15 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SGPB.Web.Data;
 using SGPB.Web.Data.Entities;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace SGPB.Web.Controllers
 {
+        [Authorize(Roles = "Admin")]
         public class EditorialesController  :  Controller
         {
                 private readonly ApplicationDbContext _context;
@@ -18,7 +21,9 @@ namespace SGPB.Web.Controllers
 
                 public async Task<IActionResult> Index()
                 {
-                        return View(await _context.Editoriales.ToListAsync());
+                        return View(await _context.Editoriales
+                                .OrderByDescending(b => b.Id)
+                                .ToListAsync());
                 }
 
                 public IActionResult Create()

@@ -1,0 +1,107 @@
+﻿@model SGPB.Web.Data.Entities.Lending
+@{
+    ViewData["Title"] = "Detalle Libro";
+}
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
+<link rel="stylesheet" href="~/lib/font-awesome/css/fontawesome.css" />
+<link rel="stylesheet" href="~/lib/font-awesome/css/regular.min.css">
+<link rel="stylesheet" href="~/lib/font-awesome/css/solid.min.css">
+
+
+<header class="bg-primary py-5 mt-lg-5">
+    <div class="container px-4 px-lg-5 my-2">
+        <div class="text-center text-white">
+            <h1 class="display-4 fw-bolder">Libro: @Html.DisplayFor(model => model.Book.Name)</h1>
+        </div>
+    </div>
+</header>
+<section class="py-3">
+    <div class="container px-4 px-lg-5">
+
+        <div class="row gx-4 gx-lg-5 row-cols-12 row-cols-sm-12 row-cols-md-12 row-cols-xl-12 justify-content-center">
+        </div>
+        <div class="row gx-4 gx-lg-5 row-cols-12 row-cols-sm-12 row-cols-md-12 row-cols-xl-12 justify-content-center">
+
+            <div class="col-lg-8">
+                <div class="card mb-4">
+                    <a href="#!"><img class="card-img-top" src="@Model.Book.ImageFullPath" alt="@Model.Book.Name" style="width:100%;height:500px;max-width: 100%"></a>
+                    <div class="card-body">
+                        <h2 class="card-title">@Html.DisplayFor(model => model.Book.Serial) - @Html.DisplayFor(model => model.Book.Name)</h2>
+                        <p class="card-text">@Html.DisplayFor(model => model.Book.Description)</p>
+                    </div>
+                </div>                
+                <a class="btn btn-outline-success" asp-area="" asp-controller="Lendings" asp-action="Index">Regresar</a>
+            </div>
+            <div class="col-lg-4">
+                <div class="card mb-4">
+                    <div class="card-header">@Html.DisplayNameFor(model => model.Book.NumCopies)</div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <ul class="list-unstyled mb-0">
+                                    <li>@Html.DisplayFor(model => model.Book.NumCopies)</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card mb-4">
+                    <div class="card-header">@Html.DisplayNameFor(model => model.Book.NumPages)</div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <ul class="list-unstyled mb-0">
+                                    <li>@Html.DisplayFor(model => model.Book.NumPages)</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card mb-4">
+                    <div class="card-header">@Html.DisplayNameFor(model => model.User.FullName)</div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <ul class="list-unstyled mb-0">
+                                    <li>@Html.DisplayFor(model => model.User.FullName)</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card mb-4">
+                    <div class="card-header">@Html.DisplayNameFor(model => model.LendingStatus)</div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <ul class="list-unstyled mb-0">
+                                    <li>@Html.DisplayFor(model => model.LendingStatus)</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card mb-4">
+                    <div class="card-header">@Html.DisplayNameFor(model => model.Date)</div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <ul class="list-unstyled mb-0">
+                                    <li>@Html.DisplayFor(model => model.Date)</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>       
+
+    </div>
+</section>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+}
