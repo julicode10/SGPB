@@ -34,6 +34,7 @@ namespace SGPB.Web.Data
                         await CheckUserAsync("2020", "Juan Fernando", "Perez", "juanf@yopmail.com", "3000000000", "Calle Luna Calle Sol", UserType.Admin);
                         await CheckUserAsync("3030", "Sol", "Garcia", "solga@yopmail.com", "3000000000", "Calle Luna Calle Sol", UserType.User);
                         await CheckUserAsync("4040", "Maria", "Serrano", "mserrano@yopmail.com", "3000000000", "Calle Luna Calle Sol", UserType.User);
+                        await CheckLendingsAsync();
                 }
 
                 private async Task CheckRolesAsync()
@@ -187,6 +188,32 @@ namespace SGPB.Web.Data
                         };
 
                         _context.Books.Add(book);
+                }
+
+                private async Task CheckLendingsAsync()
+                {
+                        if (!_context.Lendings.Any())
+                        {
+                                await AddLendingAsync(3, "Cosa");
+                                await AddLendingAsync(3, "Otra cosa");                               
+                                await _context.SaveChangesAsync();
+                        }
+                }
+
+                private async Task AddLendingAsync(int Quantity, string Remarks)
+                {
+                        Lending lending = new()
+                        {
+                                Date = DateTime.Now,
+                                Quantity = Quantity,
+                                Book = _context.Books.OrderBy(o => Guid.NewGuid()).First(),
+                                User = _context.Users.OrderBy(o => Guid.NewGuid()).First(),
+                                Remarks = Remarks,
+                                LendingStatus = LendingStatus.New,
+                        };
+
+                        _context.Lendings.Add(lending);
+
                 }
         }
 }

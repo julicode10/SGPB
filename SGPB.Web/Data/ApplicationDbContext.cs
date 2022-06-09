@@ -19,8 +19,6 @@ namespace SGPB.Web.Data
 
                 public DbSet<Lending> Lendings { get; set; }
 
-                public DbSet<LendingDetail> LendingDetails { get; set; }
-
                 public DbSet<Book> Books { get; set; }
                 public DbSet<BookImage> BookImages { get; set; }
 

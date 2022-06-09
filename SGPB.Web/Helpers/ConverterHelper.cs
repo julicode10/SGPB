@@ -1,5 +1,7 @@
-﻿using SGPB.Web.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using SGPB.Web.Data;
 using SGPB.Web.Data.Entities;
+using SGPB.Web.Enums;
 using SGPB.Web.Models;
 using System;
 using System.Threading.Tasks;
@@ -84,6 +86,52 @@ namespace SGPB.Web.Helpers
                         };
                 }
 
+                public async Task<Lending> ToLendingAsync(LendingViewModel model, bool isNew)
+                {
+                        return new Lending
+                        {
+                                Id = isNew ? 0 : model.Id,
+                                User = await _context.Users.FindAsync(model.UserId),
+                                Book = await _context.Books.FindAsync(model.BookId),
+                                Date = model.Date,
+                                Quantity = model.Quantity,
+                                Remarks = model.Remarks,
+                                LendingStatus = model.LendingStatus
+                        };
+                }
+
+
+                public LendingViewModel ToLendingViewModel(Lending lending)
+                {
+                        return new LendingViewModel
+                        {
+
+                                User = lending.User,
+                                UserId = lending.User.Id,
+                                Book = lending.Book,
+                                BookId = lending.Book.Id,
+
+                                Id = lending.Id,
+                                Date = lending.Date,
+                                Quantity = lending.Quantity,
+                                Remarks = lending.Remarks,
+                                LendingStatus = lending.LendingStatus
+                        };
+                }
+
+                public async Task<Lending> ToAddBookToLendingAsync(AddBookToLendingViewModel model, string userId, bool isNew)
+                {
+                        return new Lending
+                        {
+                                Id = isNew ? 0 : model.Id,
+                                Date = DateTime.Now,
+                                Quantity = model.NumCopies,
+                                Book = await _context.Books.FindAsync(model.BookId),
+                                User = await _context.Users.FindAsync(model.UserId),
+                                Remarks = model.Remarks,
+                                LendingStatus = LendingStatus.New,
+                        };
+                }
 
         }
 

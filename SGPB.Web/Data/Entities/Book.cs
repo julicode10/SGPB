@@ -52,8 +52,6 @@ namespace SGPB.Web.Data.Entities
 
                 public ICollection<BookImage> BookImages { get; set; }
 
-                public ICollection<LendingDetail> LendingDetails { get; set; }
-
                 [Display(Name = "Número de imágenes del libro")]
                 public int BookImagesNumber => BookImages == null ? 0 : BookImages.Count;
 

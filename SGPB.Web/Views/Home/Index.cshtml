@@ -36,6 +36,7 @@
                     <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
                         <div class="text-center">
                                 <a asp-area="" asp-controller="Books" asp-action="Details" asp-route-id="@item.Id" class="btn btn-outline-primary mt-auto">Ver más información</a>
+                                <a asp-area="" asp-controller="Lendings" asp-action="Create" asp-route-id="@item.Id" class="btn btn-outline-success mt-auto">Prestar libro</a>
                         </div>
                     </div>
                 </div>

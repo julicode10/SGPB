@@ -15,6 +15,12 @@ namespace SGPB.Web.Helpers
 
                 BookViewModel ToBookViewModel(Book book);
 
+                Task<Lending> ToLendingAsync(LendingViewModel model, bool isNew);
+
+                LendingViewModel ToLendingViewModel(Lending lending);
+
+                Task<Lending> ToAddBookToLendingAsync(AddBookToLendingViewModel model, string userId, bool isNew);
+
         }
 
 }
